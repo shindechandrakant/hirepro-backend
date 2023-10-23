@@ -1,7 +1,69 @@
+import { Job } from "../entity/job.js";
+import { JobField } from "../entity/JobField.js";
+import { sequelize } from "./databaseConnection.js";
+
 export const getJobByIdUtil = async (jobId) => {
-  return {
-    id: jobId,
-    description: "ok",
-    role: "Fullstack",
-  };
+  const job = await Job.findOne({
+    where: {
+      job_id: jobId,
+    },
+  });
+
+  const fields = await getJobFields(jobId);
+  let points = [];
+
+  for (let [index, field] of fields.entries()) {
+    let { field_name, field_description } = field;
+    points.push({
+      field_name,
+      points: field_description.split("="),
+    });
+  }
+  return { points, ...job.dataValues };
+};
+
+export const getAllActiveJobsUtil = async () => {
+  const jobs = await Job.findAll({
+    where: {
+      is_active: true,
+    },
+  });
+
+  let newJobs = [];
+
+  for (let [index, job] of jobs.entries()) {
+    const fields = await getJobFields(job.job_id);
+    let points = [];
+    for (let [index, field] of fields.entries()) {
+      let { field_name, field_description } = field;
+      points.push({
+        field_name,
+        points: field_description.split("="),
+      });
+    }
+    newJobs.push({
+      ...job.dataValues,
+      points,
+    });
+  }
+  return newJobs;
+};
+
+const getJobFields = async (jobId) => {
+  const fields = await JobField.findAll({
+    attributes: [
+      "field_name",
+      [
+        sequelize.fn(
+          "GROUP_CONCAT",
+          sequelize.literal(`field_description, '='`)
+        ),
+        "field_description",
+      ],
+    ],
+    where: { job_id: jobId },
+    group: ["field_name"],
+  });
+
+  return fields;
 };
