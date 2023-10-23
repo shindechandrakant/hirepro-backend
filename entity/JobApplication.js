@@ -3,10 +3,6 @@ import { Sequelize, DataTypes } from "sequelize";
 import { Job } from "./job.js";
 
 export const JobApplication = sequelize.define("job_application", {
-  tracking_id: {
-    type: DataTypes.STRING(10),
-    allowNull: false,
-  },
   first_name: {
     type: DataTypes.STRING(20),
     allowNull: false,
@@ -29,7 +25,7 @@ export const JobApplication = sequelize.define("job_application", {
     type: DataTypes.STRING(2024),
   },
   resume: {
-    type: DataTypes.STRING(100),
+    type: DataTypes.STRING(1000),
     allowNull: false,
   },
   status: {

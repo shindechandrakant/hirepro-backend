@@ -21,3 +21,7 @@ export const getAllActiveJobs = async (req, res) => {
     count: jobs.length,
   });
 };
+
+export const jobApplication = async (req, res) => {
+  //
+};
