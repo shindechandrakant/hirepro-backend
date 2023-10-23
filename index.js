@@ -1,7 +1,7 @@
 import { app } from "./server.js";
 import cors from "cors";
 import bodyParser from "body-parser";
-// import pkg from "express-fileupload";
+import fileUpload from "express-fileupload";
 // const { fileUpload } = pkg;
 
 import "./utils/databaseConnection.js";
@@ -16,7 +16,7 @@ const options = {
 // Middlewares
 app.use(bodyParser.json());
 app.use(cors(options));
-// app.use(fileUpload());
+app.use(fileUpload());
 
 // routes
 app.use("/api/v1/jobs", jobsRouter);
