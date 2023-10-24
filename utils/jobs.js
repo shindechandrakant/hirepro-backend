@@ -17,7 +17,7 @@ export const getJobByIdUtil = async (jobId) => {
       "applicant_count",
       "job_type",
     ],
-    include: [{ model: Company, attributes: [] }],
+    include: [{ model: Company, attributes: ["name"] }],
     where: {
       job_id: jobId,
     },
@@ -49,7 +49,7 @@ export const getAllActiveJobsUtil = async () => {
       "applicant_count",
       "job_type",
     ],
-    include: [{ model: Company, attributes: [] }],
+    include: [{ model: Company, attributes: ["name"] }],
     where: {
       is_active: true,
     },
