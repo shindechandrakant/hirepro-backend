@@ -36,12 +36,7 @@ export const jobApplicationUtil = async (fields, files) => {
       status: "Submitted",
       job_id,
     });
-
-    console.log("Before Saved");
     await application.save();
-
-    console.log("Saved");
-    return;
   } catch (error) {
     console.log("Error occured while applying job");
     console.log(error);
