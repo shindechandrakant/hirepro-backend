@@ -37,12 +37,6 @@ export const getJobByIdUtil = async (jobId) => {
 };
 
 export const getAllActiveJobsUtil = async () => {
-  // const jobs = await Job.findAll({
-  //   where: {
-  //     is_active: true,
-  //   },
-  // });
-
   const jobs = await Job.findAll({
     attributes: [
       "job_id",
