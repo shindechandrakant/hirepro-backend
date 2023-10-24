@@ -57,3 +57,4 @@ export const Job = sequelize.define(
 );
 
 Job.belongsTo(Company, { foreignKey: "company_id" });
+Company.hasMany(Job);
