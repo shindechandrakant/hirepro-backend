@@ -1,9 +1,23 @@
 import { Job } from "../entity/job.js";
 import { JobField } from "../entity/JobField.js";
+import { Company } from "../entity/Company.js";
 import { sequelize } from "./databaseConnection.js";
+import { Sequelize } from "sequelize";
 
 export const getJobByIdUtil = async (jobId) => {
   const job = await Job.findOne({
+    attributes: [
+      "job_id",
+      ["title", "job_title"],
+      [Sequelize.col("company.name"), "company_name"],
+      "experience",
+      "location",
+      "key_skills",
+      "created_at",
+      "applicant_count",
+      "job_type",
+    ],
+    include: [{ model: Company, attributes: [] }],
     where: {
       job_id: jobId,
     },
@@ -23,7 +37,25 @@ export const getJobByIdUtil = async (jobId) => {
 };
 
 export const getAllActiveJobsUtil = async () => {
+  // const jobs = await Job.findAll({
+  //   where: {
+  //     is_active: true,
+  //   },
+  // });
+
   const jobs = await Job.findAll({
+    attributes: [
+      "job_id",
+      ["title", "job_title"],
+      [Sequelize.col("company.name"), "company_name"],
+      "experience",
+      "location",
+      "key_skills",
+      "created_at",
+      "applicant_count",
+      "job_type",
+    ],
+    include: [{ model: Company, attributes: [] }],
     where: {
       is_active: true,
     },
@@ -32,19 +64,7 @@ export const getAllActiveJobsUtil = async () => {
   let newJobs = [];
 
   for (let [index, job] of jobs.entries()) {
-    const fields = await getJobFields(job.job_id);
-    let points = [];
-    for (let [index, field] of fields.entries()) {
-      let { field_name, field_description } = field;
-      points.push({
-        field_name,
-        points: field_description.split("="),
-      });
-    }
-    newJobs.push({
-      ...job.dataValues,
-      points,
-    });
+    newJobs.push(job.dataValues);
   }
   return newJobs;
 };
