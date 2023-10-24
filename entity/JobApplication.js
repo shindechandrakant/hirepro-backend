@@ -1,6 +1,6 @@
 import { sequelize } from "../utils/databaseConnection.js";
 import { Sequelize, DataTypes } from "sequelize";
-import { Job } from "./job.js";
+import { Job } from "./Jobs.js";
 
 export const JobApplication = sequelize.define("job_application", {
   first_name: {

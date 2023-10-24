@@ -1,4 +1,4 @@
-import { Job } from "../entity/job.js";
+import { Job } from "../entity/Jobs.js";
 import { JobField } from "../entity/JobField.js";
 import { Company } from "../entity/Company.js";
 import { sequelize } from "./databaseConnection.js";

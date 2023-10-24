@@ -1,5 +1,5 @@
 import { sequelize } from "../utils/databaseConnection.js";
-import { Job } from "./job.js";
+import { Job } from "./jobs.js";
 import { DataTypes } from "sequelize";
 
 export const JobField = sequelize.define("job_field", {
