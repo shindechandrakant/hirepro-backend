@@ -3,7 +3,7 @@ import { jobApplicationUtil } from "../utils/jobApplication.js";
 export const jobApplication = async (req, res) => {
   try {
     let { first_name, email, phone } = req.body;
-    if (!first_name || !email || !phone || !req.files.resume) {
+    if (!first_name || !email || !phone || !req.files || !req.files.resume) {
       return res.status(400).json({
         error: "Missing Required Fields",
       });
