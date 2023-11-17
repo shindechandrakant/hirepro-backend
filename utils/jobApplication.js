@@ -1,7 +1,7 @@
 import { uploadToS3 } from "./AwsS3Config.js";
 import { JobApplication } from "../entity/JobApplication.js";
 
-export const jobApplicationUtil = async (fields, files) => {
+export const jobApplicationUtil = async (jobApplication, resume) => {
   try {
     const fileContent = Buffer.from(files.resume.data, "binary");
     const bucketName = process.env.AWS_S3_BUSKET_NAME;
