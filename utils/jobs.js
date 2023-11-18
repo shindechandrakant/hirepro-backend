@@ -8,7 +8,6 @@ export const getJobByIdUtil = async (jobId) => {
     attributes: [
       "job_id",
       ["title", "job_title"],
-      [Sequelize.col("company.name"), "company_name"],
       "experience",
       "location",
       "key_skills",
@@ -19,6 +18,7 @@ export const getJobByIdUtil = async (jobId) => {
     include: [{ model: Company, attributes: ["name"] }],
     where: {
       job_id: jobId,
+      is_active: true,
     },
   });
 
@@ -33,7 +33,7 @@ export const getJobByIdUtil = async (jobId) => {
     }
     return accumulator;
   }, {});
-  return { job, points };
+  return { ...job.dataValues, points };
 };
 
 export const getAllActiveJobsUtil = async () => {
