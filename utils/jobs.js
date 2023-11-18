@@ -22,6 +22,8 @@ export const getJobByIdUtil = async (jobId) => {
     },
   });
 
+  if (!job) return job;
+
   const fields = await getJobFields(jobId);
   const points = fields.reduce((accumulator, { dataValues }) => {
     if (accumulator[dataValues.field_name]) {
@@ -67,4 +69,15 @@ const getJobFields = async (jobId) => {
   });
 
   return fields;
+};
+
+export const isJobExistAndActiveUtil = async (jobId) => {
+  const count = await Job.count({
+    where: {
+      job_id: jobId,
+      is_active: true,
+    },
+  });
+
+  return count === 0 ? false : true;
 };
