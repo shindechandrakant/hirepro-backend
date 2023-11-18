@@ -1,4 +1,6 @@
 import { Sequelize } from "sequelize";
+
+console.log(process.env.DATABASE_NAME);
 const sequelize = new Sequelize(
   process.env.DATABASE_NAME,
   process.env.DATABASE_USER,
